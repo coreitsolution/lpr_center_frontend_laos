@@ -108,7 +108,7 @@ const SearchCameras: React.FC<SearchCamerasProps> = ({open, onClose, selectedCam
       setSelectedSubDistrictObjects([{ label: t('dropdown.all'), value: 0 }]);
       setSelectedCameraObjects([{ label: t('dropdown.all'), value: "0" }]);
     }
-  }, [i18n.language, open])
+  }, [i18n.language, open, i18n.isInitialized])
 
   useEffect(() => {
     if (sliceDropdown.provinces && sliceDropdown.provinces.data) {
@@ -118,7 +118,7 @@ const SearchCameras: React.FC<SearchCamerasProps> = ({open, onClose, selectedCam
       }));
       setProvincesOptions([{ label: t('dropdown.all'), value: "0" }, ...options]);
     }
-  }, [sliceDropdown.provinces, i18n.language]);
+  }, [sliceDropdown.provinces, i18n.language, i18n.isInitialized]);
 
   useEffect(() => {
     if (districtsList) {
@@ -128,7 +128,7 @@ const SearchCameras: React.FC<SearchCamerasProps> = ({open, onClose, selectedCam
       }))
       setDistrictsOptions([{ label: t('dropdown.all'), value: 0 }, ...options])
     }
-  }, [districtsList, i18n.language])
+  }, [districtsList, i18n.language, i18n.isInitialized]);
 
   useEffect(() => {
     if (subDistrictsList) {
@@ -138,7 +138,7 @@ const SearchCameras: React.FC<SearchCamerasProps> = ({open, onClose, selectedCam
       }))
       setSubDistrictsOptions([{ label: t('dropdown.all'), value: 0 }, ...options])
     }
-  }, [subDistrictsList, i18n.language])
+  }, [subDistrictsList, i18n.language, i18n.isInitialized]);
 
   useEffect(() => {
     if (cameraList) {
@@ -148,7 +148,7 @@ const SearchCameras: React.FC<SearchCamerasProps> = ({open, onClose, selectedCam
       }))
       setCamerasOption([{ label: t('dropdown.all'), value: "0" }, ...options])
     }
-  }, [cameraList, i18n.language])
+  }, [cameraList, i18n.language, i18n.isInitialized]);
 
   useEffect(() => {
     if (cameraList.length === 0) {

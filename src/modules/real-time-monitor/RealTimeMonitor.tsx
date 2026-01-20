@@ -473,9 +473,29 @@ const RealTimeMonitor: React.FC<RealTimeMonitorProps> = ({}) => {
     setMap(mapInstance)
   }, []);
 
-  const handleCamerasSelected = (cameraSelected: {value: any, label: string}[]) => {
-    setSelectedCameraObjects(cameraSelected);
-  };
+  const handleCamerasSelected = useCallback(async (cameraSelected: { value: any, label: string }[]) => {
+    const syncSelectedObjects = camerasOption.filter(option => 
+      cameraSelected.some(selected => selected.value === option.value)
+    );
+
+    const hasAll = syncSelectedObjects.some((v) => v.value === "0");
+
+    if (hasAll || syncSelectedObjects.length === 0) {
+      const allObj = camerasOption.find(o => o.value === "0") || { label: t('dropdown.all'), value: "0" };
+      setSelectedCameraObjects([allObj]);
+      setSelectedCameraIds(cameraList);
+      await executeSearch(cameraList);
+    } 
+    else {
+      setSelectedCameraObjects(syncSelectedObjects);
+      
+      const filtered = cameraList.filter((c) => 
+          syncSelectedObjects.some((sc) => sc.value === c.camera_uid)
+      );
+      setSelectedCameraIds(filtered);
+      await executeSearch(filtered);
+    }
+  }, [camerasOption, cameraList, t, executeSearch]);
 
   // const getProvinceName = (regionCode: string) => {
   //   const province = sliceDropdown.regions?.data.find(region => region.region_code === regionCode);
